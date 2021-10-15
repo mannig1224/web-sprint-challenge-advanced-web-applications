@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import articleService from '../services/articleServices';
+import axios from 'axios';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 import Article from './Article';
 import EditForm from './EditForm';
@@ -9,8 +12,25 @@ const View = (props) => {
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
+    useEffect(() => {
+        articleService(setArticles);
+    }, [articles]);
+
     const handleDelete = (id) => {
+        axiosWithAuth().delete(`http://localhost:5000/api/articles/${id}` )
+            .then(resp=> {
+                deleteArticle(id);
+                setArticles(resp.data);
+            })
+            .catch(err=> {
+                console.log(err);
+            })
     }
+
+    const deleteArticle = (id)=> {
+        setArticles(articles.filter(item => item.id !== Number(id)));
+    
+      }
 
     const handleEdit = (article) => {
     }
@@ -31,7 +51,7 @@ const View = (props) => {
                 {
                     articles.map(article => {
                         return <ArticleDivider key={article.id}>
-                            <Article key={article.id} article={article} handleDelete={handleDelete} handleEditSelect={handleEditSelect}/>
+                            <Article key={article.id} article={article} handleDelete={handleDelete} handleEditSelect={handleEditSelect} />
                         </ArticleDivider>
                     })
                 }
