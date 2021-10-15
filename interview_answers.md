@@ -8,4 +8,5 @@ Never store passwords, use authorization
 3. Describe how web servers work.
 A computer that runs websites following protocals.
 4. Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
-POST, PUT, GET, DELETE
+POST, PUT -, GET, DELETE
+create => POST, read => GET, update => PUT and delete => Delete
