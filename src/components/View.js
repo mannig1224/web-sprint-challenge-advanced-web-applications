@@ -33,6 +33,18 @@ const View = (props) => {
       }
 
     const handleEdit = (article) => {
+        axiosWithAuth()
+            .put(`http://localhost:5000/api/articles/${editId}`, article)
+            .then(res => {
+                setEditing(false);
+                setArticles(res.data);
+                console.log(articles);
+
+              })
+              .catch(err => {
+                console.log(err);
+              });
+              console.log("outside call: ", articles);
     }
 
     const handleEditSelect = (id)=> {
